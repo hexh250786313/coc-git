@@ -208,8 +208,8 @@ export default class GitBuffer implements Disposable {
     let line = await workspace.nvim.call('line', '.')
     let diff = this.getChunk(line)
     if (diff) {
-      let content = diff.head + '\n' + diff.lines.join('\n')
-      await this.showDoc(content, 'diff')
+      let content = [diff.head, diff.lines.join("\n")]
+      await this.showDoc(content, 'diff', 'Git Chunk Info')
     }
   }
 
@@ -779,12 +779,26 @@ export default class GitBuffer implements Disposable {
     nvim.resumeNotification(false, true)
   }
 
-  public async showDoc(content: string, filetype = 'diff'): Promise<void> {
+  public async showDoc(content: string | string[], filetype = 'diff', title = ''): Promise<void> {
     if (workspace.floatSupported) {
-      let docs: Documentation[] = [{ content, filetype }]
-      await this.floatFactory.show(docs)
+      let docs: Documentation[] = []
+      if (Array.isArray(content)) {
+        docs = content.map((o) => ({ content: o, filetype }))
+      } else {
+        docs = [{ content, filetype }]
+      }
+      await this.floatFactory.show(docs, {
+        border: [1, 1, 1, 1],
+        highlight: "CocGitFloating",
+        title
+      })
     } else {
-      const lines = content.split('\n')
+      let lines = []
+      if (Array.isArray(content)) {
+        lines = content
+      } else {
+        lines = content.split("\n")
+      }
       workspace.nvim.call('coc#util#preview_info', [lines, 'diff'], true)
     }
   }

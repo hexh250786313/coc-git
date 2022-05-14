@@ -1,4 +1,5 @@
-import { OutputChannel, window, workspace, Uri, Document, FloatFactory } from 'coc.nvim'
+import { OutputChannel, window, workspace, Uri, Document } from 'coc.nvim'
+import FloatFactory from '../model/custom-floating'
 import GitRepo from './repo'
 import Git from './git'
 import GitResolver from './resolver'

@@ -1,7 +1,7 @@
 {
   "name": "@hexuhua/coc-git",
   "version": "2.4.9-a",
-  "description": "A fork of @neoclide/coc-git",
+  "description": "A fork of neoclide/coc-git",
   "main": "lib/index.js",
   "keywords": [
     "coc.nvim",

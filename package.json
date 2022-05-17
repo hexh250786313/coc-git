@@ -1,7 +1,7 @@
 {
   "name": "@hexuhua/coc-git",
-  "version": "2.4.9",
-  "description": "Git extension for coc.nvim",
+  "version": "2.4.9-a",
+  "description": "A fork of @neoclide/coc-git",
   "main": "lib/index.js",
   "keywords": [
     "coc.nvim",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/neoclide/coc-git.git"
+    "url": "git+https://@github.com:hexh250786313/coc-git.git"
   },
   "scripts": {
     "prepare": "node esbuild.js"

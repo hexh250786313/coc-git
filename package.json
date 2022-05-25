@@ -1,9 +1,8 @@
 {
-  "name": "coc-git",
+  "name": "@hexuhua/coc-git",
   "version": "2.4.10",
   "description": "Git extension for coc.nvim",
   "main": "lib/index.js",
-  "publisher": "chemzqm",
   "keywords": [
     "coc.nvim",
     "git"
@@ -346,7 +345,6 @@
       }
     }
   },
-  "author": "chemzqm@gmail.com",
   "license": "MIT",
   "devDependencies": {
     "@chemzqm/tsconfig": "^0.0.3",

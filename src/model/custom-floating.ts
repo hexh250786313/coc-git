@@ -34,8 +34,12 @@ class CustomFloatFactory extends FloatFactory {
   }
 
   public close(): void {
-    workspace.nvim.command(`highlight DiffAdd guibg=${this.DiffAdd.bg} guifg=${this.DiffAdd.fg}`)
-    workspace.nvim.command(`highlight DiffDelete guibg=${this.DiffDelete.bg} guifg=${this.DiffDelete.fg}`)
+    if (this.DiffAdd) {
+      workspace.nvim.command(`highlight DiffAdd guibg=${this.DiffAdd.bg} guifg=${this.DiffAdd.fg}`)
+    }
+    if (this.DiffDelete) {
+      workspace.nvim.command(`highlight DiffDelete guibg=${this.DiffDelete.bg} guifg=${this.DiffDelete.fg}`)
+    }
     super.close()
   }
 }

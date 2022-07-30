@@ -210,6 +210,31 @@ export default class GitBuffer implements Disposable {
     if (diff) {
       let content = [diff.head, diff.lines.join("\n")]
       await this.showDoc(content, 'diff', 'Git Chunk Info')
+    } else {
+      let chunks: StageChunk[]
+      try {
+        let stagedDiff = await this.repo.getStagedChunks(this.relpath)
+        chunks = Object.values(stagedDiff)[0]
+      } catch (e) {
+        return
+      }
+      if (!chunks.length) {
+        return
+      }
+      let adjust = 0
+      for (let diff of this.diffs) {
+        if (diff.end >= line) {
+          break
+        }
+        adjust -= diff.added.count
+        adjust += diff.removed.count
+      }
+      line = line + adjust
+      let chunk = chunks.find(o => o.add.lnum <= line && o.add.lnum + o.add.count >= line)
+      if (chunk) {
+        let content = 'Staged chagnes' + '\n' + chunk.lines.join('\n')
+        await this.showDoc(content, 'diff')
+      }
     }
   }
 
@@ -252,6 +277,25 @@ export default class GitBuffer implements Disposable {
         } else {
           await buffer.setVirtualText(virtualTextSrcId, lnum - 1, [[prefix + blameText, 'CocCodeLens']])
         }
+      }
+    }
+  }
+
+  public async showBlameDoc(lnum: number): Promise<void> {
+    let indexed = await this.repo.isIndexed(this.relpath)
+    if (!indexed) {
+      window.showMessage('File not indexed')
+    } else {
+      let infos = await this.getBlameInfo()
+      let info = infos.find(o => lnum >= o.startLnum && lnum <= o.endLnum)
+      if (info && info.author && info.author != 'Not Committed Yet') {
+        let blameText: string[] = []
+        blameText.push(`${info.author}, ${info.time}`)
+        blameText.push(`${info.summary}`)
+        blameText.push(`${info.sha.substring(0, 7)}`)
+        await this.showDoc(blameText.join('\n\n'), 'text')
+      } else {
+        window.showMessage('Not committed yet')
       }
     }
   }

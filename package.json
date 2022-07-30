@@ -1,6 +1,6 @@
 {
   "name": "@hexuhua/coc-git",
-  "version": "2.4.10-b",
+  "version": "2.5.0",
   "description": "A fork of neoclide/coc-git",
   "main": "lib/index.js",
   "keywords": [
@@ -73,6 +73,10 @@
       {
         "title": "Push code of current branch to remote",
         "command": "git.push"
+      },
+      {
+        "title": "Show git blame info in float or popup window",
+        "command": "git.showBlameDoc"
       }
     ],
     "configuration": {
@@ -306,6 +310,11 @@
           "type": "string",
           "default": "DiffAdd",
           "description": "Highlight group for the incoming version of a merge conflict."
+        },
+        "git.gstatus.saveBeforeOpen": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Auto save opened files before open list."
         },
         "coc.source.issues.enable": {
           "type": "boolean",

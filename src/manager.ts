@@ -126,6 +126,9 @@ export default class DocumentManager {
         currentHlGroup: config.get<string>('conflict.current.hlGroup', 'DiffChange'),
         incomingHlGroup: config.get<string>('conflict.incoming.hlGroup', 'DiffAdd')
       },
+      gstatus: {
+        saveBeforeOpen: config.get<boolean>('gstatus.saveBeforeOpen', false)
+      },
       virtualTextSrcId: this.virtualTextSrcId,
       conflictSrcId: this.conflictSrcId
     }
@@ -134,6 +137,10 @@ export default class DocumentManager {
 
   private get enableGutters(): boolean {
     return this.config.enableGutters
+  }
+
+  public get gstatusSaveBeforeOpen(): boolean {
+    return this.config.gstatus.saveBeforeOpen
   }
 
   public get git(): Git {
@@ -238,6 +245,12 @@ export default class DocumentManager {
   public async showCommit(): Promise<void> {
     let buf = await this.buffer
     if (buf) await buf.showCommit()
+  }
+
+  public async showBlameDoc(): Promise<void> {
+    let buf = await this.buffer
+    let line = await this.nvim.call('line', '.')
+    if (buf) await buf.showBlameDoc(line)
   }
 
   public async browser(action = 'open', range?: [number, number], permalink = false): Promise<void> {

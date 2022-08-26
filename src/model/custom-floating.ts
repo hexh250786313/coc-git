@@ -21,13 +21,16 @@ async function generateColor(symbol: string): Promise<Color> {
 class CustomFloatFactory extends FloatFactory {
   private DiffAdd: Color
   private DiffDelete: Color
+  private CocFloatDividingLine: Color
 
   public async show(...args: any[]): Promise<void> {
     if (!this.DiffAdd) this.DiffAdd = await generateColor("DiffAdd")
     if (!this.DiffDelete) this.DiffDelete = await generateColor("DiffDelete")
+    if (!this.CocFloatDividingLine) this.CocFloatDividingLine = await generateColor("CocFloatDividingLine")
 
     await workspace.nvim.command(`highlight DiffAdd guibg=NONE guifg=#9ed071`)
     await workspace.nvim.command(`highlight DiffDelete guibg=NONE guifg=#fc5f7e`)
+    await workspace.nvim.command(`highlight CocFloatDividingLine guibg=NONE`)
 
     // @ts-expect-error
     await super.show(...args)
@@ -39,6 +42,9 @@ class CustomFloatFactory extends FloatFactory {
     }
     if (this.DiffDelete) {
       workspace.nvim.command(`highlight DiffDelete guibg=${this.DiffDelete.bg} guifg=${this.DiffDelete.fg}`)
+    }
+    if (this.CocFloatDividingLine) {
+      workspace.nvim.command(`highlight CocFloatDividingLine guibg=${this.CocFloatDividingLine.bg} guifg=${this.CocFloatDividingLine.fg}`)
     }
     super.close()
   }

@@ -40,6 +40,9 @@ export default class GitBuffer implements Disposable {
       this.hasConflicts = hasConflicts
       this.refresh()
     })
+    this.floatFactory = window.createFloatFactory(
+      Object.assign({modes: ['n']}, this.config.floatConfig)
+    )
   }
 
   public get cachedDiffs(): Diff[] {

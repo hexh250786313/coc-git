@@ -1,6 +1,6 @@
 {
   "name": "@hexuhua/coc-git",
-  "version": "2.5.2",
+  "version": "2.5.2-custom-1",
   "description": "A fork of neoclide/coc-git",
   "main": "lib/index.js",
   "keywords": [

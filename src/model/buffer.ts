@@ -1,11 +1,11 @@
-import { Disposable, Document, Documentation, FloatFactory, Mutex, OutputChannel, window, workspace } from 'coc.nvim'
-import debounce from 'debounce'
+import { Disposable, Document, Mutex, Documentation, FloatFactory, OutputChannel, window, workspace } from 'coc.nvim'
 import { format } from 'timeago.js'
-import { URL } from 'url'
 import { BlameInfo, ChangeType, Conflict, ConflictParseState, ConflictPart, Diff, FoldSettings, GitConfiguration, SignInfo, StageChunk } from '../types'
 import { createUnstagePatch, equals, getRepoUrl, getUrl, toUnixSlash } from '../util'
+import debounce from 'debounce'
 import Git from './git'
 import Repo from './repo'
+import { URL } from 'url'
 
 const signGroup = 'CocGit'
 
@@ -28,7 +28,7 @@ export default class GitBuffer implements Disposable {
     public readonly repo: Repo,
     private git: Git,
     private channel: OutputChannel,
-    private floatFactory: FloatFactory | undefined
+    private floatFactory: FloatFactory
   ) {
     this.mutex = new Mutex()
     this.refresh = debounce(() => {

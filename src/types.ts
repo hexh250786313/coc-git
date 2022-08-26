@@ -38,19 +38,6 @@ export interface GitConfiguration {
     currentHlGroup: string
     incomingHlGroup: string
   }
-  floatConfig: {
-    border?: boolean
-    rounded?: boolean
-    highlight?: string
-    title?: string
-    borderhighlight?: string
-    close?: boolean
-    maxHeight?: number
-    maxWidth?: number
-    winblend?: number
-    focusable?: boolean
-    shadow?: boolean
-  }
   virtualTextSrcId: number
   conflictSrcId: number
   gstatus: {

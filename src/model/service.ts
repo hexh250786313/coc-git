@@ -13,14 +13,12 @@ export default class GitService {
   private _resolver: GitResolver
   private repos: Map<string, GitRepo> = new Map()
   private outputChannel: OutputChannel
-  private floatFactory: FloatFactory | undefined
+  private floatFactory: FloatFactory
   constructor(gitInfo: IGit) {
     const outputChannel = this.outputChannel = window.createOutputChannel('git')
     this._git = new Git(gitInfo, outputChannel)
     this._resolver = new GitResolver(this._git, outputChannel)
-    if (typeof window.createFloatFactory === 'function') {
-      this.floatFactory = window.createFloatFactory({ modes: ['n'] })
-    }
+    this.floatFactory = new FloatFactory(workspace.nvim)
   }
 
   public getRepoFromRoot(root: string): GitRepo {
@@ -66,7 +64,7 @@ export default class GitService {
   }
 
   public dispose(): void {
-    this.floatFactory?.dispose()
+    this.floatFactory.dispose()
     this._resolver.dispose()
     this.outputChannel.dispose()
     this.repos.clear()
